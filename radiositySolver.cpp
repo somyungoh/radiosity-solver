@@ -51,26 +51,26 @@ GLUI_Checkbox	 *cbox_showCurrentPatch, *cbox_showAmient, *cbox_smoothShade;
 GLUI_Spinner	 *spinner_iterationLevel;
 
 // IDs for callbacks
-#define CB_UNSHOTPATCH_ID	    100
-#define CB_AMBIENT_ID		    101
-#define CB_SHADED_ID			102
-#define SPIN_ITERATE_ID			103
-#define BTN_GENFF				104
-#define BTN_RUNPR				105
+#define CB_UNSHOTPATCH_ID	100
+#define CB_AMBIENT_ID		101
+#define CB_SHADED_ID		102
+#define SPIN_ITERATE_ID		103
+#define BTN_GENFF		104
+#define BTN_RUNPR		105
 
 // Ambient term variables
 Color reflectionFactor;	// overall interreflection factor R
-Color ambient;			// total ambient factor
-Color dAmbient;			// chance in ambience
+Color ambient;		// total ambient factor
+Color dAmbient;		// chance in ambience
 
 // Global Control Variables
 int mainWindow;
-int totalStep = 0;
+int totalStep 			= 0;
 int currentPatchID;
-int numOfIteration = 1;
-int displayCurrentShotPatch = true;
-int showAmbient = true;
-int smoothShade = true;
+int numOfIteration 		= 1;
+int displayCurrentShotPatch 	= true;
+int showAmbient 		= true;
+int smoothShade 		= true;
 
 
 //		Structures		//
@@ -79,13 +79,13 @@ int smoothShade = true;
 typedef struct {
 	int 	id;
 	int 	vertices[4];	// array of vertices (index into VertexArray)
-	Color 	emissivity;		// emitted radiosity
+	Color 	emissivity;	// emitted radiosity
 	Color 	reflectance;	// reflectance
-	Vertex 	center;			// center of the patch
-	Vector 	normal;			// patch normal
-	double 	area;			// area of the patch
-	Color 	radiosity;		// radiosity of the patch
-	Color 	unshot;			// unshot radiosity of the patch
+	Vertex 	center;		// center of the patch
+	Vector 	normal;		// patch normal
+	double 	area;		// area of the patch
+	Color 	radiosity;	// radiosity of the patch
+	Color 	unshot;		// unshot radiosity of the patch
 	int 	numelements;	// number of elements in patch
 	int 	startelement;	// number of first element for this patch in ElementArray
 
@@ -95,10 +95,10 @@ typedef struct {
 typedef struct {
 	int 	id;
 	int 	vertices[4];	// vertices of patch (index into VertexArray)
-	Vertex 	center;			// center of the element
-	double 	area;			// area of the element
-	Patch* 	patch;			// Patch that this is an element of
-	Color 	radiosity;		// radiosity of the element
+	Vertex 	center;		// center of the element
+	double 	area;		// area of the element
+	Patch* 	patch;		// Patch that this is an element of
+	Color 	radiosity;	// radiosity of the element
 } Element;
 
 // unshot tag structure
@@ -138,11 +138,9 @@ class Hemicube {
 
 	struct HemiPixel {
 		double formFactor;	// total form factor stored in pixel
-		vector<int> id;			// list of element id that is projected
+		vector<int> id;		// list of element id that is projected
 
-		HemiPixel() {
-			formFactor = 0;
-		}
+		HemiPixel() { formFactor = 0; }
 	};
 
 public: 
@@ -163,7 +161,7 @@ public:
 		hemiPixel.push_back(new HemiPixel[HEMICUBE_SUBDIV * HEMICUBE_SUBDIV / 2]);
 		hemiPixel.push_back(new HemiPixel[HEMICUBE_SUBDIV * HEMICUBE_SUBDIV / 2]);
 	}
-	~Hemicube() { for(int i=0; i<5; i++) delete[] hemiPixel[i]; }					// so important. or else it eats so much memory during runtime
+	~Hemicube() { for(int i=0; i<5; i++) delete[] hemiPixel[i]; }	// so important. or else it eats so much memory during runtime
 
 	void computeDeltaFormFactor(Element element, int element_id) {
 		for (int SIDE = 0; SIDE < 5; SIDE++) {
@@ -175,53 +173,53 @@ public:
 			// 1. set OpenGL viewport
 			switch (SIDE) {
 			case FRONT:
-				width = height = HEMICUBE_SUBDIV;
-				left = - HEMICUBE_HEIGHT;
-				right = HEMICUBE_HEIGHT;
-				bottom = -HEMICUBE_HEIGHT;
-				top = HEMICUBE_HEIGHT;
-				lookat = center + normal;
-				up = u;
+				width 	= height = HEMICUBE_SUBDIV;
+				left 	= - HEMICUBE_HEIGHT;
+				right 	= HEMICUBE_HEIGHT;
+				bottom	= -HEMICUBE_HEIGHT;
+				top 	= HEMICUBE_HEIGHT;
+				lookat 	= center + normal;
+				up 	= u;
 				break;
 			case TOP:
-				width = HEMICUBE_SUBDIV;
-				height = HEMICUBE_SUBDIV / 2;
-				left = -HEMICUBE_HEIGHT;
-				right = HEMICUBE_HEIGHT;
-				bottom = 0;
-				top = HEMICUBE_HEIGHT;
-				lookat = center + u;
-				up = normal;
+				width 	= HEMICUBE_SUBDIV;
+				height 	= HEMICUBE_SUBDIV / 2;
+				left 	= -HEMICUBE_HEIGHT;
+				right 	= HEMICUBE_HEIGHT;
+				bottom 	= 0;
+				top 	= HEMICUBE_HEIGHT;
+				lookat 	= center + u;
+				up 	= normal;
 				break;
 			case RIGHT:
-				width = HEMICUBE_SUBDIV;
-				height = HEMICUBE_SUBDIV / 2;
-				left = -HEMICUBE_HEIGHT;
-				right = HEMICUBE_HEIGHT;
-				bottom = 0;
-				top = HEMICUBE_HEIGHT;
-				lookat = center + v;
-				up = normal;
+				width 	= HEMICUBE_SUBDIV;
+				height 	= HEMICUBE_SUBDIV / 2;
+				left 	= -HEMICUBE_HEIGHT;
+				right 	= HEMICUBE_HEIGHT;
+				bottom 	= 0;
+				top 	= HEMICUBE_HEIGHT;
+				lookat 	= center + v;
+				up 	= normal;
 				break;
 			case BOTTOM:
-				width = HEMICUBE_SUBDIV;
-				height = HEMICUBE_SUBDIV / 2;
-				left = -HEMICUBE_HEIGHT;
-				right = HEMICUBE_HEIGHT;
-				bottom = 0;
-				top = HEMICUBE_HEIGHT;
-				lookat = center - u;
-				up = normal;
+				width 	= HEMICUBE_SUBDIV;
+				height 	= HEMICUBE_SUBDIV / 2;
+				left 	= -HEMICUBE_HEIGHT;
+				right 	= HEMICUBE_HEIGHT;
+				bottom 	= 0;
+				top 	= HEMICUBE_HEIGHT;
+				lookat 	= center - u;
+				up 	= normal;
 				break;
 			case LEFT:
-				width = HEMICUBE_SUBDIV;
-				height = HEMICUBE_SUBDIV / 2;
-				left = -HEMICUBE_HEIGHT;
-				right = HEMICUBE_HEIGHT;
-				bottom = 0;
-				top = HEMICUBE_HEIGHT;
-				lookat = center - v;
-				up = normal;
+				width 	= HEMICUBE_SUBDIV;
+				height 	= HEMICUBE_SUBDIV / 2;
+				left 	= -HEMICUBE_HEIGHT;
+				right 	= HEMICUBE_HEIGHT;
+				bottom 	= 0;
+				top 	= HEMICUBE_HEIGHT;
+				lookat 	= center - v;
+				up 	= normal;
 				break;
 			}
 
