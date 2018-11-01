@@ -3,6 +3,11 @@ A very basic radiosity solver, implementation of a paper'A Progressive Refinemen
 
 This project is a coursework of Computer Graphics(CSCE 641), Texas A&M University.
 
+The techniques in this radiosity solver:
+- Compute patch to element formfactor using Hemicube
+- Solve radiosity equation by progressive refinement technique
+- Compute ambient term
+
 
 <img src="https://user-images.githubusercontent.com/44325719/47464409-aa862700-d7ae-11e8-9749-5264110fd9e3.PNG" width="640" height="480">
 Image of patches.
