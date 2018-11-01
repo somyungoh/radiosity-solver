@@ -9,11 +9,6 @@
 //		Computer Graphics, 2017 Fall
 //		Texas A&M University
 //
-//		<Projet Tasks>
-//		1. Compute patch to element formfactor using Hemicube
-//		2. Solve radiosity equation by progressive refinement approach
-//		3. Compute ambient term
-//		4. Interpolate vertex colors by neighboring elements
 //
 //**************************************************************************
 
@@ -44,9 +39,9 @@ enum { FRONT, LEFT, RIGHT, TOP, BOTTOM };
 //		Global Variables		//
 
 //	GLUI Variables
-GLUI			 *glui;
-GLUI_Panel		 *panel_control;
-GLUI_Button		 *button_genFF, *button_doPR;
+GLUI		 *glui;
+GLUI_Panel	 *panel_control;
+GLUI_Button	 *button_genFF, *button_doPR;
 GLUI_Checkbox	 *cbox_showCurrentPatch, *cbox_showAmient, *cbox_smoothShade;
 GLUI_Spinner	 *spinner_iterationLevel;
 
@@ -124,12 +119,12 @@ struct CompareTag {
 };
 
 // Array buffers
-int 	NumVertices;
-Vertex* VertexArray;
-Color* 	VertexColors;
-int 	NumPatches;
-Patch* 	PatchArray;
-int 	NumElements;
+int 	 NumVertices;
+Vertex*  VertexArray;
+Color* 	 VertexColors;
+int 	 NumPatches;
+Patch* 	 PatchArray;
+int 	 NumElements;
 Element* ElementArray;
 double** lookUpTable;
 priority_queue<UnshotTag, vector<UnshotTag>, CompareTag> unshotPatchQueue;
@@ -979,16 +974,16 @@ int main(int argc, char** argv)
 
 	// GLUI initialization
 	glui = GLUI_Master.create_glui("Render Control", 0, 800, 70);
-	panel_control 			= new  GLUI_Panel(glui, "Settings");
+	panel_control 		= new  GLUI_Panel(glui, "Settings");
 	cbox_showCurrentPatch 	= new GLUI_Checkbox(panel_control, "show current patch", &displayCurrentShotPatch, CB_UNSHOTPATCH_ID, buttonCallback);
-	cbox_showAmient 		= new GLUI_Checkbox(panel_control, "show ambient light", &showAmbient,CB_AMBIENT_ID, buttonCallback);
-	cbox_smoothShade 		= new GLUI_Checkbox(panel_control, "gouraud shade", &smoothShade, CB_SHADED_ID, buttonCallback);
+	cbox_showAmient 	= new GLUI_Checkbox(panel_control, "show ambient light", &showAmbient,CB_AMBIENT_ID, buttonCallback);
+	cbox_smoothShade 	= new GLUI_Checkbox(panel_control, "gouraud shade", &smoothShade, CB_SHADED_ID, buttonCallback);
 	spinner_iterationLevel 	= new GLUI_Spinner(panel_control, "interation in step", &numOfIteration, -1, buttonCallback);
 	spinner_iterationLevel->set_int_limits(1, 150, GLUI_LIMIT_CLAMP);
 	spinner_iterationLevel->set_speed(0.05);
-	button_doPR 			= new GLUI_Button(glui, "Do Progressive Refinement", BTN_RUNPR, buttonCallback);
+	button_doPR 		= new GLUI_Button(glui, "Do Progressive Refinement", BTN_RUNPR, buttonCallback);
 	glui->add_separator();
-	button_genFF 			= new GLUI_Button(glui, "Generate Form Factor", BTN_GENFF, buttonCallback);
+	button_genFF 		= new GLUI_Button(glui, "Generate Form Factor", BTN_GENFF, buttonCallback);
 	glui->set_main_gfx_window(mainWindow);
 
 	glutMainLoop();
